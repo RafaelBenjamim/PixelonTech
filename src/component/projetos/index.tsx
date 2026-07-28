@@ -18,7 +18,7 @@ export default function Projetos({ items }: ProjetosProps) {
           PROJETOS RECENTES
         </Reveal>
         <Reveal delay={80} tag="h2" className="pxl-h2 mt-3">
-          Alguns pixels que já acendi
+          Alguns pixels que já acendemos
         </Reveal>
 
         <div className="mt-10 flex flex-col gap-3">

@@ -13,12 +13,19 @@ import Servicos from "../component/servicos";
 import Projetos from "../component/projetos";
 import Contato from "../component/contato";
 import Footer from "../component/footer";
+import QuemSomos from "../component/quemSomos";
 
 /* ---------------------------------------------------------------
    HOOKS
 --------------------------------------------------------------- */
 
-const SECTION_IDS = ["topo", "servicos", "projetos", "contato"] as const;
+const SECTION_IDS = [
+  "topo",
+  "quem-somos",
+  "servicos",
+  "projetos",
+  "contato",
+] as const;
 
 /**
  * Scroll-spy via IntersectionObserver instead of a scroll listener that
@@ -56,6 +63,7 @@ function useActiveSection(): string {
 --------------------------------------------------------------- */
 
 const NAV_ITEMS = [
+  { label: "Quem somos", id: "quem-somos" },
   { label: "Serviços", id: "servicos" },
   { label: "Projetos", id: "projetos" },
   { label: "Contato", id: "contato" },
@@ -65,22 +73,22 @@ const SERVICOS = [
   {
     tag: "LANDING PAGE",
     titulo: "Página de conversão",
-    desc: "Estrutura enxuta, visual forte e foco em transformar visitas em contatos, vendas ou agendamentos.",
+    desc: "Uma página única, direta e feita pra transformar quem visita em cliente — seja pra vender, marcar um horário ou receber uma mensagem.",
   },
   {
     tag: "SITE INSTITUCIONAL",
     titulo: "Presença completa",
-    desc: "Uma presença digital sólida, com conteúdos bem organizados e navegação que guia o visitante com clareza.",
+    desc: "Um site com várias páginas, organizado e fácil de navegar, pra apresentar sua empresa e tudo que ela oferece.",
   },
   {
-    tag: "BACK-END & INTEGRAÇÕES",
-    titulo: "Funcionalidade real",
-    desc: "APIs, automações, painéis e integrações para o site fazer mais do que impressionar: entregar valor.",
+    tag: "FUNCIONALIDADES EXTRAS",
+    titulo: "Seu site faz mais",
+    desc: "Login de usuários, formulários inteligentes, painéis administrativos e integrações com outras ferramentas — o que seu negócio precisar.",
   },
   {
     tag: "MANUTENÇÃO",
     titulo: "Acompanhamento contínuo",
-    desc: "Atualizações, ajustes e evolução do projeto depois do lançamento, sem perder o controle do que já funciona.",
+    desc: "Depois que o site vai pro ar, a gente continua por perto: ajustes, atualizações e melhorias sempre que precisar.",
   },
 ];
 
@@ -217,6 +225,7 @@ export default function PixelonTech() {
           springTiltY={springTiltY}
           tapSpring={TAP_SPRING}
         />
+        <QuemSomos />
 
         <Diferenciais items={DIFERENCIAIS} />
         <Servicos items={SERVICOS} />

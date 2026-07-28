@@ -15,7 +15,7 @@ export default function Servicos({ items }: ServicosProps) {
     <section id="servicos" className="pxl-section-alt scroll-mt-24">
       <div className="mx-auto max-w-6xl px-5 py-20 md:py-24">
         <Reveal tag="p" className="pxl-eyebrow pxl-pink-text">
-          O QUE EU FAÇO
+          O QUE FAZEMOS
         </Reveal>
         <Reveal delay={80} tag="h2" className="pxl-h2 mt-3">
           Da tela ao servidor
