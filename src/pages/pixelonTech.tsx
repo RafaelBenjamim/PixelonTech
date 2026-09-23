@@ -15,24 +15,23 @@ import Contato from "../component/contato";
 import Footer from "../component/footer";
 import QuemSomos from "../component/quemSomos";
 
+// NOVOS COMPONENTES: Crie esses arquivos na sua pasta components
+import Processo from "../component/processo";
+import Planos from "../component/planos";
+
 /* ---------------------------------------------------------------
    HOOKS
 --------------------------------------------------------------- */
-
 const SECTION_IDS = [
   "topo",
   "quem-somos",
   "servicos",
+  "processo",
   "projetos",
+  "planos",
   "contato",
 ] as const;
 
-/**
- * Scroll-spy via IntersectionObserver instead of a scroll listener that
- * recalculates offsets on every pixel. Fires only when a section actually
- * crosses the detection band, which is what was mainly responsible for the
- * stutter while scrolling.
- */
 function useActiveSection(): string {
   const [active, setActive] = useState<string>("topo");
 
@@ -61,11 +60,11 @@ function useActiveSection(): string {
 /* ---------------------------------------------------------------
    CONTENT
 --------------------------------------------------------------- */
-
 const NAV_ITEMS = [
   { label: "Quem somos", id: "quem-somos" },
   { label: "Serviços", id: "servicos" },
   { label: "Projetos", id: "projetos" },
+  { label: "Planos", id: "planos" },
   { label: "Contato", id: "contato" },
 ];
 
@@ -81,14 +80,9 @@ const SERVICOS = [
     desc: "Um site com várias páginas, organizado e fácil de navegar, pra apresentar sua empresa e tudo que ela oferece.",
   },
   {
-    tag: "FUNCIONALIDADES EXTRAS",
+    tag: "SISTEMAS & API",
     titulo: "Seu site faz mais",
-    desc: "Login de usuários, formulários inteligentes, painéis administrativos e integrações com outras ferramentas — o que seu negócio precisar.",
-  },
-  {
-    tag: "MANUTENÇÃO",
-    titulo: "Acompanhamento contínuo",
-    desc: "Depois que o site vai pro ar, a gente continua por perto: ajustes, atualizações e melhorias sempre que precisar.",
+    desc: "Login de usuários, formulários inteligentes, painéis administrativos e integrações com outras ferramentas.",
   },
 ];
 
@@ -108,55 +102,51 @@ const DIFERENCIAIS = [
 ];
 
 const PROJETOS = [
-  {
-    nome: "Allp Fit",
-    tipo: "Landing page — academia",
-    desc: "Página de captação de alunos com identidade visual voltada a performance.",
-  },
-  {
-    nome: "Fiorella",
-    tipo: "Landing page + API",
-    desc: "Site com integração de back-end para um negócio local, unindo apresentação e funcionalidade.",
-  },
-  {
-    nome: "Ajiê Espelhos",
-    tipo: "Proposta de landing page",
-    desc: "Vitrine digital para loja de espelhos decorativos, pensada para redes sociais.",
-  },
-  {
-    nome: "Jp Barbearia",
-    tipo: "Sistema de fila para clientes",
-    desc: "Sistema de fila virtual que permite aos clientes acompanhar, em tempo real, a ordem de atendimento da barbearia de forma online, evitando esperas desnecessárias",
-  },
+  { nome: "Allp Fit", tipo: "Landing page — academia", desc: "Página de captação de alunos com identidade visual voltada a performance." },
+  { nome: "Fiorella", tipo: "Landing page + API", desc: "Site com integração de back-end para um negócio local, unindo apresentação e funcionalidade.", link: "https://fiorellaclub.com.br" },
+  { nome: "Ajiê Espelhos", tipo: "Proposta de landing page", desc: "Vitrine digital para loja de espelhos decorativos, pensada para redes sociais." },
+  { nome: "Jp Barbearia", tipo: "Sistema de fila para clientes", desc: "Sistema virtual que permite aos clientes acompanhar a ordem de atendimento em tempo real." },
 ];
+
+// NOVOS DADOS ESTRUTURADOS
+const PROCESSO = [
+  { step: "01", titulo: "Briefing", desc: "Entendemos seu negócio e o que você precisa." },
+  { step: "02", titulo: "Design", desc: "Criamos a interface com foco no seu usuário." },
+  { step: "03", titulo: "Código", desc: "Desenvolvemos com alta performance e SEO." },
+  { step: "04", titulo: "Lançamento", desc: "Seu site no ar, pronto para converter." },
+];
+
+const ENTREGAS_LP = [
+  { grupo: "Design & Estrutura", itens: ["Design personalizado (até 6 seções)", "Totalmente responsivo (Mobile/Desktop)", "Seção de serviços e Galeria de fotos"] },
+  { grupo: "Conversão", itens: ["Botão de WhatsApp flutuante", "Formulário de contato", "Integração com Instagram e Maps"] },
+  { grupo: "Técnico", itens: ["SEO Básico para o Google", "Certificado de Segurança HTTPS/SSL", "Hospedagem, publicação e 1 refação"] },
+];
+
+const MANUTENCAO = {
+  preco: "59,00",
+  itens: [
+    "Hospedagem inclusa",
+    "Domínio e SSL*",
+    "Monitoramento e Backup",
+    "Pequenas alterações de conteúdo",
+    "Correção de problemas e Suporte"
+  ]
+};
 
 const TAP_SPRING = { type: "spring", stiffness: 400, damping: 22 } as const;
 
 /* ---------------------------------------------------------------
    PAGE
 --------------------------------------------------------------- */
-
 export default function PixelonTech() {
   const [menuOpen, setMenuOpen] = useState(false);
   const visibleSection = useActiveSection();
   const heroRef = useRef<HTMLElement | null>(null);
 
-  // Tilt + parallax as MotionValues: they update the DOM directly through
-  // Framer Motion's own scheduler and never trigger a React re-render.
-  // This — not the canvas — was the main source of the stutter, since the
-  // previous version called setState on every scroll/mousemove event.
   const tiltX = useMotionValue(0);
   const tiltY = useMotionValue(0);
-  const springTiltX = useSpring(tiltX, {
-    stiffness: 150,
-    damping: 20,
-    mass: 0.4,
-  });
-  const springTiltY = useSpring(tiltY, {
-    stiffness: 150,
-    damping: 20,
-    mass: 0.4,
-  });
+  const springTiltX = useSpring(tiltX, { stiffness: 150, damping: 20, mass: 0.4 });
+  const springTiltY = useSpring(tiltY, { stiffness: 150, damping: 20, mass: 0.4 });
 
   const { scrollY } = useScroll();
   const gridY = useTransform(scrollY, [0, 900], [0, 110]);
@@ -164,9 +154,7 @@ export default function PixelonTech() {
 
   const scrollTo = (id: string) => {
     setMenuOpen(false);
-    document
-      .getElementById(id)
-      ?.scrollIntoView({ behavior: "smooth", block: "start" });
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
   useEffect(() => {
@@ -174,9 +162,6 @@ export default function PixelonTech() {
     if (!hero) return;
 
     const onPointerMove = (e: PointerEvent) => {
-      // Only a real mouse tilts the card — on touch this would fight the
-      // scroll gesture and just feel janky, so touch is left alone here
-      // and gets its own feedback (ripple + tap) inside the pixel grid.
       if (e.pointerType !== "mouse") return;
       const rect = hero.getBoundingClientRect();
       const nx = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
@@ -225,11 +210,19 @@ export default function PixelonTech() {
           springTiltY={springTiltY}
           tapSpring={TAP_SPRING}
         />
+        
         <QuemSomos />
-
         <Diferenciais items={DIFERENCIAIS} />
         <Servicos items={SERVICOS} />
+        
+        {/* NOVA SEÇÃO: PROCESSO */}
+        <Processo items={PROCESSO} />
+        
         <Projetos items={PROJETOS} />
+
+        {/* NOVA SEÇÃO: PACOTES / ENTREGAS */}
+        <Planos entregas={ENTREGAS_LP} manutencao={MANUTENCAO} tapSpring={TAP_SPRING} />
+
         <Contato tapSpring={TAP_SPRING} />
         <Footer />
       </div>
@@ -238,9 +231,8 @@ export default function PixelonTech() {
 }
 
 /* ---------------------------------------------------------------
-   STYLES — real CSS classes (no JIT / arbitrary-value dependency)
+   STYLES (Atualizado com as novas classes para timeline e pacotes)
 --------------------------------------------------------------- */
-
 function PixelStyles() {
   return (
     <style>{`
@@ -385,6 +377,29 @@ function PixelStyles() {
         .pxl-title, .pxl-hero-glow, .pxl-scanlines { animation: none !important; }
         .pxl-hero { transform: none !important; }
       }
+
+      /* ---- NOVOS ESTILOS ADICIONADOS PARA AS NOVAS SEÇÕES ---- */
+      .pxl-timeline { display: flex; flex-direction: column; gap: 2rem; position: relative; margin-top: 3rem; }
+      @media (min-width: 768px) { .pxl-timeline { flex-direction: row; } }
+      .pxl-timeline-step { flex: 1; padding: 1.5rem; border-left: 2px solid var(--border); position: relative; transition: border-color .3s; }
+      .pxl-timeline-step:hover { border-color: var(--cyan); }
+      @media (min-width: 768px) {
+        .pxl-timeline-step { border-left: none; border-top: 2px solid var(--border); padding: 2rem 1rem 1rem 0; }
+      }
+      .pxl-timeline-num { font-family: 'Press Start 2P', monospace; font-size: 1.5rem; color: var(--bg-alt); text-shadow: -1px -1px 0 var(--cyan), 1px -1px 0 var(--cyan), -1px 1px 0 var(--cyan), 1px 1px 0 var(--cyan); margin-bottom: 1rem; display: block; opacity: 0.5; }
+      .pxl-timeline-step:hover .pxl-timeline-num { opacity: 1; text-shadow: -1px -1px 0 var(--pink), 1px -1px 0 var(--pink), -1px 1px 0 var(--pink), 1px 1px 0 var(--pink); }
+      
+      .pxl-plan-grid { display: grid; gap: 2rem; margin-top: 3rem; }
+      @media (min-width: 992px) { .pxl-plan-grid { grid-template-columns: 3fr 2fr; gap: 4rem; } }
+      
+      .pxl-list { list-style: none; padding: 0; margin: 0; }
+      .pxl-list li { display: flex; align-items: flex-start; gap: 0.75rem; margin-bottom: 0.75rem; color: var(--text); font-size: 14px; }
+      .pxl-list li::before { content: '>'; color: var(--cyan); font-family: 'JetBrains Mono', monospace; font-weight: bold; }
+      
+      .pxl-pricing-card { background: linear-gradient(180deg, var(--card), var(--bg-alt)); border: 1px solid var(--border); border-radius: 12px; padding: 2rem; position: relative; overflow: hidden; box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5); }
+      .pxl-pricing-card::after { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--cyan), var(--pink)); }
+      .pxl-price { font-size: 2.5rem; font-family: 'Space Grotesk', sans-serif; font-weight: bold; color: var(--text-bright); margin: 1rem 0; display: flex; align-items: baseline; gap: 0.25rem; }
+      .pxl-price span { font-size: 1rem; color: var(--text-muted); font-weight: normal; }
     `}</style>
   );
 }
