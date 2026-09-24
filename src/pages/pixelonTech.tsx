@@ -14,14 +14,9 @@ import Projetos from "../component/projetos";
 import Contato from "../component/contato";
 import Footer from "../component/footer";
 import QuemSomos from "../component/quemSomos";
-
-// NOVOS COMPONENTES: Crie esses arquivos na sua pasta components
 import Processo from "../component/processo";
 import Planos from "../component/planos";
 
-/* ---------------------------------------------------------------
-   HOOKS
---------------------------------------------------------------- */
 const SECTION_IDS = [
   "topo",
   "quem-somos",
@@ -123,7 +118,7 @@ const ENTREGAS_LP = [
 ];
 
 const MANUTENCAO = {
-  preco: "59,00",
+  preco: "59,90",
   itens: [
     "Hospedagem inclusa",
     "Domínio e SSL*",

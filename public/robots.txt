@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://pixellon.com.br/sitemap.xml
